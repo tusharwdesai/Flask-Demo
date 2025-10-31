@@ -1,4 +1,4 @@
-from flask import Flask,render_template, request, redirect
+from flask import Flask,render_template, request, redirect, url_for
 from pymongo import MongoClient
 from urllib.parse import quote_plus
 
@@ -15,7 +15,7 @@ uri = f"mongodb+srv://{encoded_username}:{encoded_password}@luster0.sicg5af.mong
 client = MongoClient(uri)
 db = client['user_db']
 collection = db['users']
-
+todo_collection = db['todos']
 app = Flask(__name__)
 
 @app.route("/api/users",methods=['GET', 'POST'])
@@ -49,7 +49,21 @@ def success():
 
 @app.route('/todo')
 def todo():
-    return render_template('todo.html')
+    todos = todo_collection.find()
+    return render_template('todo.html', todos=todos)
+
+@app.route('/submittodoitem', methods=['POST'])
+def add_todo():
+    item_name = request.form.get('item_name')
+    item_desc = request.form.get('item_desc')
+
+    if item_name and item_desc:
+        todo_collection.insert_one({
+            'name': item_name,
+            'description': item_desc
+        })
+    return redirect(url_for('todo'))
+
 
 @app.route("/")
 def index():
