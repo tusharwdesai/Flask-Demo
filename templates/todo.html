@@ -55,6 +55,9 @@
 <div class="container">
     <h2>📝 To-Do List</h2>
     <form action="/submittodoitem" method="POST">
+       <label>Item ID</label>
+        <input type="text" name="item_id" required>
+
         <label>Item Name</label>
         <input type="text" name="item_name" required>
         
@@ -67,6 +70,7 @@
     <h3>Current To-Dos:</h3>
     {% for todo in todos %}
         <div class="todo-item">
+          <p><b>ID:</b> {{ todo.item_id }}</p>
             <strong>{{ todo.name }}</strong>
             <p>{{ todo.description }}</p>
         </div>
