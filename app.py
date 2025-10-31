@@ -47,6 +47,10 @@ def readapi():
 def success():
     return render_template('success.html')
 
+@app.route('/todo')
+def todo():
+    return render_template('todo.html')
+
 @app.route("/")
 def index():
  return render_template('index.html')
