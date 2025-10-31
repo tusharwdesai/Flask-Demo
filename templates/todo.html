@@ -71,6 +71,7 @@
     {% for todo in todos %}
         <div class="todo-item">
           <p><b>ID:</b> {{ todo.item_id }}</p>
+           <p><b>UUID:</b> {{ todo.item_uuid }}</p>
             <strong>{{ todo.name }}</strong>
             <p>{{ todo.description }}</p>
         </div>

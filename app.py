@@ -2,6 +2,7 @@ from flask import Flask,render_template, request, redirect, url_for
 from pymongo import MongoClient
 from urllib.parse import quote_plus
 from bson.objectid import ObjectId
+import uuid
 
 
 # URL-encode the username and password
@@ -58,10 +59,12 @@ def add_todo():
     item_id = request.form.get('item_id')
     item_name = request.form.get('item_name')
     item_desc = request.form.get('item_desc')
+    item_uuid = str(uuid.uuid4())
 
     if item_name and item_desc:
         todo_collection.insert_one({
            'item_id': item_id,
+           'item_uuid': item_uuid,
             'name': item_name,
             'description': item_desc
         })
